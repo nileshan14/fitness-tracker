@@ -1,8 +1,7 @@
 module projects.fitnesstracker {
     requires javafx.controls;
-    requires javafx.fxml;
+    requires java.sql;
 
-
-    opens projects.fitnesstracker to javafx.fxml;
     exports projects.fitnesstracker;
+    exports projects.fitnesstracker.ui;
 }
