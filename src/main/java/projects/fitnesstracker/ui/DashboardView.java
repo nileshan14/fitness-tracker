@@ -1,11 +1,11 @@
 package projects.fitnesstracker.ui;
 
-import projects.fitnesstracker.service.AuthService;
-import projects.fitnesstracker.util.Session;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import projects.fitnesstracker.service.AuthService;
+import projects.fitnesstracker.util.Session;
 
 public class DashboardView extends VBox {
 
@@ -19,8 +19,14 @@ public class DashboardView extends VBox {
 
         Label title = new Label("Dashboard");
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-
         Label welcome = new Label("Welcome, " + displayName + " 👋");
+
+        Button logWorkout = new Button("Log Workout");
+        logWorkout.setOnAction(e -> SceneManager.showWorkout());
+
+        // Placeholder buttons for next features
+        Button logMeal = new Button("Log Meal (next)");
+        Button profile = new Button("Profile (next)");
 
         Button logout = new Button("Logout");
         AuthService auth = new AuthService();
@@ -29,6 +35,6 @@ public class DashboardView extends VBox {
             SceneManager.showLogin();
         });
 
-        getChildren().addAll(title, welcome, logout);
+        getChildren().addAll(title, welcome, logWorkout, logMeal, profile, logout);
     }
 }

@@ -21,4 +21,8 @@ public class SceneManager {
     public static void showDashboard() {
         stage.setScene(new Scene(new DashboardView(), 900, 600));
     }
+
+    public static void showWorkout() {
+        stage.setScene(new Scene(new WorkoutView(), 900, 600));
+    }
 }
