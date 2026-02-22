@@ -30,8 +30,11 @@ public class LoginView extends VBox {
 
         loginBtn.setOnAction(e -> {
             String msg = auth.login(username.getText(), password.getText());
-            if (msg == null) SceneManager.showDashboard();
-            else error.setText(msg);
+            if (msg == null) {
+                SceneManager.showDashboard();
+            } else {
+                error.setText(msg);
+            }
         });
 
         goSignup.setOnAction(e -> SceneManager.showSignup());

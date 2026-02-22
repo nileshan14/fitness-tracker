@@ -33,8 +33,11 @@ public class SignupView extends VBox {
 
         createBtn.setOnAction(e -> {
             String msg = auth.signup(username.getText(), password.getText(), confirm.getText());
-            if (msg == null) SceneManager.showDashboard();
-            else error.setText(msg);
+            if (msg == null) {
+                SceneManager.showDashboard();
+            } else {
+                error.setText(msg);
+            }
         });
 
         backLogin.setOnAction(e -> SceneManager.showLogin());

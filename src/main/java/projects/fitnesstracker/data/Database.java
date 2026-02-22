@@ -7,17 +7,13 @@ import java.sql.Statement;
 
 public class Database {
 
-    // This creates a file called fitness.db in your PROJECT ROOT (same level as pom.xml)
     private static final String URL = "jdbc:sqlite:fitness.db";
 
     public static Connection getConnection() throws SQLException {
         Connection conn = DriverManager.getConnection(URL);
-
-        // SQLite needs this ON each connection for foreign keys to actually enforce
         try (Statement st = conn.createStatement()) {
             st.execute("PRAGMA foreign_keys = ON;");
         }
-
         return conn;
     }
 
@@ -25,7 +21,6 @@ public class Database {
         try (Connection conn = getConnection();
              Statement st = conn.createStatement()) {
 
-            // USERS table
             st.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS users (
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,28 +34,24 @@ public class Database {
                 );
             """);
 
-            // WORKOUTS table
             st.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS workouts (
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   user_id INTEGER NOT NULL,
-                  date TEXT NOT NULL,                 -- YYYY-MM-DD
-                  type TEXT NOT NULL,
-                  duration_min INTEGER NOT NULL CHECK(duration_min > 0),
-                  calories_burned INTEGER NOT NULL CHECK(calories_burned >= 0),
+                  date TEXT NOT NULL,
+                  title TEXT NOT NULL,
                   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
                 );
             """);
 
-            // MEALS table
             st.executeUpdate("""
-                CREATE TABLE IF NOT EXISTS meals (
+                CREATE TABLE IF NOT EXISTS exercise_entries (
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  user_id INTEGER NOT NULL,
-                  date TEXT NOT NULL,                 -- YYYY-MM-DD
-                  name TEXT NOT NULL,
-                  calories INTEGER NOT NULL CHECK(calories >= 0),
-                  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                  workout_id INTEGER NOT NULL,
+                  exercise_name TEXT NOT NULL,
+                  weight REAL NOT NULL CHECK(weight >= 0),
+                  reps INTEGER NOT NULL CHECK(reps > 0),
+                  FOREIGN KEY(workout_id) REFERENCES workouts(id) ON DELETE CASCADE
                 );
             """);
 
